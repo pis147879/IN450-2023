@@ -1,0 +1,115 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3482,        107]
+NotebookOptionsPosition[      2944,         91]
+NotebookOutlinePosition[      3343,        107]
+CellTagsIndexPosition[      3300,        104]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"sbox", "=", "\"\<E4D12FB83A6C5907\>\""}], "\[IndentingNewLine]", 
+ RowBox[{"sbox", "=", 
+  RowBox[{
+  "PRESENTsbox", "=", "\"\<C56B90AD3EF84712\>\""}]}], "\[IndentingNewLine]", 
+ RowBox[{"sbox", "=", 
+  RowBox[{
+  "MIDORIsbox0", "=", "\"\<cad3ebf789150246\>\""}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sbox", "=", 
+   RowBox[{"MIDORIsbox1", "=", "\"\<1053e2f7da9bc846\>\""}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"permutation", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "5", ",", "9", ",", "13", ",", "2", ",", "6", ",", "10", ",", 
+     "14", ",", "3", ",", "7", ",", "11", ",", "15", ",", "4", ",", "8", ",", 
+     "12", ",", "16"}], "}"}]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"l", "=", "4"}], ";", 
+  RowBox[{"m", "=", "4"}], ";", 
+  RowBox[{"Nr", "=", "4"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "S", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"S", "[", "x_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"S", "[", "x", "]"}], "=", 
+   RowBox[{
+    RowBox[{"IntegerDigits", "[", 
+     RowBox[{
+      RowBox[{"FromDigits", "[", 
+       RowBox[{"sbox", ",", "16"}], "]"}], ",", "16", ",", "16"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"x", "+", "1"}], "]"}], "]"}]}]}]}], "Input",
+ CellChangeTimes->{
+  3.925368202122924*^9},ExpressionUUID->"fc68dd22-6825-474f-82e0-\
+66674be78c33"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"S", "[", "x_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"S", "[", "x", "]"}], "=", 
+    RowBox[{
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{
+       RowBox[{"FromDigits", "[", 
+        RowBox[{"sbox", ",", "16"}], "]"}], ",", "16", ",", "16"}], "]"}], 
+     "[", 
+     RowBox[{"[", 
+      RowBox[{"x", "+", "1"}], "]"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{
+  3.9253685191540413`*^9},ExpressionUUID->"d7eaa722-043e-467e-b3dc-\
+4b349645cc18"],
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{
+   RowBox[{"Transpose", "[", 
+    RowBox[{"Drop", "[", 
+     RowBox[{
+      RowBox[{"Transpose", "[", 
+       RowBox[{"Drop", "[", 
+        RowBox[{
+         RowBox[{"LAT", "[", "S", "]"}], ",", "1"}], "]"}], "]"}], ",", "1"}],
+      "]"}], "]"}], ",", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<TemperatureMap\>\""}]}], 
+  "]"}]], "Input",ExpressionUUID->"b3756599-73c4-4928-96ff-ca6c740bf26a"]
+},
+WindowSize->{808, 911},
+WindowMargins->{{693, Automatic}, {122, Automatic}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"dddfcbea-24c5-45bc-af16-ae5c9b588858"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1406, 37, 220, "Input",ExpressionUUID->"fc68dd22-6825-474f-82e0-66674be78c33"],
+Cell[1967, 59, 520, 16, 52, "Input",ExpressionUUID->"d7eaa722-043e-467e-b3dc-4b349645cc18"],
+Cell[2490, 77, 450, 12, 30, "Input",ExpressionUUID->"b3756599-73c4-4928-96ff-ca6c740bf26a"]
+}
+]
+*)
+

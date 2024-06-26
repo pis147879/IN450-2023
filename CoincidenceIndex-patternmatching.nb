@@ -1,0 +1,160 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5247,        150]
+NotebookOptionsPosition[      3973,        126]
+NotebookOutlinePosition[      4368,        142]
+CellTagsIndexPosition[      4325,        139]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", "CoincidenceIndex", "]"}]], "Input",
+ CellLabel->
+  "In[67]:= ",ExpressionUUID->"6f4f9488-9fec-4530-a4a6-c530de6a1c57"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Distribution", "[", "testo_List", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Count", "[", 
+       RowBox[{"testo", ",", "#"}], "]"}], "&"}], ",", 
+     RowBox[{"Range", "[", 
+      RowBox[{"0", ",", "25"}], "]"}]}], "]"}], "/", 
+   RowBox[{"Length", "[", "testo", "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"CoincidenceIndex", "[", "testo_List", "]"}], ":=", 
+  RowBox[{"(", "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<list\>\"", "]"}], ";", 
+    RowBox[{"Plus", "@@", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Distribution", "[", "testo", "]"}], "^", "2"}], ")"}]}]}], 
+   ")"}]}]}], "Input",
+ CellLabel->
+  "In[68]:= ",ExpressionUUID->"98c10730-de93-4e20-9be3-51a8a2f03ab9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"random", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"RandomInteger", "[", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "25"}], "}"}], "]"}], ",", 
+     RowBox[{"{", "100", "}"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->
+  "In[21]:= ",ExpressionUUID->"e7c54117-5da3-4f8d-a091-4efb6a416b08"],
+
+Cell[BoxData[
+ RowBox[{"testo", "=", 
+  RowBox[{"FromCode", "[", "random", "]"}]}]], "Input",ExpressionUUID->\
+"6b545806-46b9-4629-b620-ba42087a90a8"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"TestAlpha", "[", 
+    RowBox[{"x_", "?", "IntegerQ"}], "]"}], ":=", 
+   RowBox[{"97", "\[LessEqual]", "x", "\[LessEqual]", 
+    RowBox[{"97", "+", "25"}]}]}], "\n", "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FromCode", "[", "codes_List", "]"}], ":=", 
+   RowBox[{"FromCharacterCode", "[", 
+    RowBox[{"codes", "+", "97"}], "]"}]}], "\n", "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"TextCode", "[", "testo_", "]"}], ":=", 
+  RowBox[{"Select", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ToCharacterCode", "[", 
+      RowBox[{"ToLowerCase", "[", "testo", "]"}], "]"}], "-", "97"}], ",", 
+    "TestAlpha"}], "]"}]}], "\n"}], "Input",
+ CellLabel->
+  "In[40]:= ",ExpressionUUID->"419ce126-06a0-4cf0-ae02-dde512133918"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CoincidenceIndex", "[", 
+   RowBox[{"testo_", "?", "StringQ"}], "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<string\>\"", "]"}], ";", 
+    RowBox[{"CoincidenceIndex", "[", 
+     RowBox[{"TextCode", "[", "testo", "]"}], "]"}]}], ")"}]}]], "Input",
+ CellLabel->
+  "In[70]:= ",ExpressionUUID->"267904e4-c080-42c6-8a37-ae54a85afeea"],
+
+Cell[BoxData[
+ RowBox[{"?", "StringQ"}]], "Input",ExpressionUUID->"303f0690-6eeb-4c59-a702-8eda3d71fab2"],
+
+Cell[BoxData[{"testo", "\n", 
+ RowBox[{"ListQ", "[", "random", "]"}], "\n", 
+ RowBox[{"StringQ", "[", "testo", "]"}]}], "Input",ExpressionUUID->"36ef5f3a-\
+9c43-45d6-8af3-f42f3b16a914"],
+
+Cell[BoxData[{
+ RowBox[{"CoincidenceIndex", "[", "random", "]"}], "\n", 
+ RowBox[{"CoincidenceIndex", "[", "testo", "]"}]}], "Input",ExpressionUUID->\
+"b4a6ab19-62fd-45a5-912d-d2b103232ee2"],
+
+Cell[BoxData[
+ RowBox[{"StringQ", "[", 
+  RowBox[{"{", 
+   RowBox[{"2", ",", "3"}], "}"}], "]"}]], "Input",ExpressionUUID->"1a00fabe-\
+c3bf-43f7-8819-6f549257d3f7"],
+
+Cell[BoxData[
+ RowBox[{"N", "@", 
+  RowBox[{"CoincidenceIndex", "[", "random", "]"}]}]], "Input",ExpressionUUID->\
+"80a82a4e-718a-41b9-bb87-875992fced3c"]
+},
+WindowSize->{808, 911},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d02be9b4-d761-4901-be57-ffad10c5f442"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 159, 3, 30, "Input",ExpressionUUID->"6f4f9488-9fec-4530-a4a6-c530de6a1c57"],
+Cell[720, 25, 770, 23, 94, "Input",ExpressionUUID->"98c10730-de93-4e20-9be3-51a8a2f03ab9"],
+Cell[1493, 50, 340, 10, 30, "Input",ExpressionUUID->"e7c54117-5da3-4f8d-a091-4efb6a416b08"],
+Cell[1836, 62, 150, 3, 30, "Input",ExpressionUUID->"6b545806-46b9-4629-b620-ba42087a90a8"],
+Cell[1989, 67, 772, 21, 220, "Input",ExpressionUUID->"419ce126-06a0-4cf0-ae02-dde512133918"],
+Cell[2764, 90, 392, 10, 30, "Input",ExpressionUUID->"267904e4-c080-42c6-8a37-ae54a85afeea"],
+Cell[3159, 102, 105, 1, 30, "Input",ExpressionUUID->"303f0690-6eeb-4c59-a702-8eda3d71fab2"],
+Cell[3267, 105, 185, 3, 73, "Input",ExpressionUUID->"36ef5f3a-9c43-45d6-8af3-f42f3b16a914"],
+Cell[3455, 110, 190, 3, 52, "Input",ExpressionUUID->"b4a6ab19-62fd-45a5-912d-d2b103232ee2"],
+Cell[3648, 115, 164, 4, 30, "Input",ExpressionUUID->"1a00fabe-c3bf-43f7-8819-6f549257d3f7"],
+Cell[3815, 121, 154, 3, 30, "Input",ExpressionUUID->"80a82a4e-718a-41b9-bb87-875992fced3c"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
