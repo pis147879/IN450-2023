@@ -1,14 +1,14 @@
 
+<< "zorro.wl"
 (*attacco differenziale Zorro* per trovare 32 bit, 4 byte*)
 
 dom2 = Range[0, 2^8 - 1];
 
 (*costruiamo la DDT*)
 
-RowDDT[f_, dx_] := Map[(BitXor[f[BitXor[#, dx]], +f[#]]) &, dom2]
-RowDDT2[f_, dx_] := 
- Map[{dx + 1, #[[1]] + 1} -> #[[2]] &, Tally[RowDDT[f, dx]]]
-sparseDDT[f_] := Flatten@Map[RowDDT2[f, #] &, dom2]
+RowDDT[f_, dx_] := Map[(BitXor[f[BitXor[#, dx]], +f[#]]) &, dom2];
+RowDDT2[f_, dx_] := Map[{dx + 1, #[[1]] + 1} -> #[[2]] &, Tally[RowDDT[f, dx]]];
+sparseDDT[f_] := Flatten@Map[RowDDT2[f, #] &, dom2];
 DDT[f_] := Normal[SparseArray[sparseDDT[f]]];
 Print[DDT[G] // MatrixForm];
 sparseDDT[G];
