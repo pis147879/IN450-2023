@@ -473,7 +473,7 @@ Trovaelemento[x_, dy_, position_, keyfirst_] :=
 
 (* utilizziamo di nuovo l'algoritmo trova 2 coppie ma questa volta le \
 diemo una variabile aggiuntiva "TrovaElemento" che verifica una \
-condizione supplementare )
+condizione supplementare *)
 
 
 
@@ -586,18 +586,7 @@ testers[x_, DIFF_, step_, keyfirst_] :=
 TrovaChar[x_, DIFF_, step_, keyfirst_] := 
  Map[testers[x[[#]], DIFF, step, keyfirst] &, Range[1, 2]]
 
-
-
-
-
-
-charposition1 = 
-  List[TrovaChar[coppie1[[1]], DIFF2, step, keyfirst], coppie1[[2]]];
-
-
-
-
-
+charposition1 = List[TrovaChar[coppie1[[1]], DIFF2, step, keyfirst], coppie1[[2]]];
 
 
 chiavifinale1 = 
