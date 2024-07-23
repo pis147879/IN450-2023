@@ -48,11 +48,9 @@ funzione stessa*)
 AddRoundKey[x_, roundkey_] := BitXor[x, roundkey];
 
 (*SubByte e la sua inversa*)
-SubByte[list_?ListQ] :=
- (Sbox@list)
+SubByte[list_?ListQ] := (Sbox@list);
 
-InvSubByte[list_?ListQ] :=
- (InvSbox@list)
+InvSubByte[list_?ListQ] :=(InvSbox@list);
 
 (*Operazione di rotazione bitwise agente su ogni elemento dello stato \
 ed inversa*)
@@ -62,7 +60,8 @@ RotateRows[list_?ListQ] := Module[{i, lista, rotate, num},
    rotate = RotateLeft[IntegerDigits[list[[i + 1]], 2, 8], i*6];
    num = FromDigits[rotate, 2];
    AppendTo[lista, num]];
-  lista]
+  lista
+]
 
 InvRotateRows[list_?ListQ] := Module[{i, lista, rotate, num},
   lista = {};
@@ -70,7 +69,8 @@ InvRotateRows[list_?ListQ] := Module[{i, lista, rotate, num},
    rotate = RotateRight[IntegerDigits[list[[i + 1]], 2, 8], i*6];
    num = FromDigits[rotate, 2];
    AppendTo[lista, num]];
-  lista]
+  lista
+]
 
 (*Operazione di MixColumns agente sul vettore di stato ed inversa*)
 MixColumns[list_?ListQ] := Module[{a, i, j, stato, ff, HLmatrix},
@@ -82,7 +82,8 @@ MixColumns[list_?ListQ] := Module[{a, i, j, stato, ff, HLmatrix},
        Range[3]]);
    AppendTo[stato, a]
    ];
-  stato]
+  stato
+]
 
 InvMixColumns[list_?ListQ] := Module[{a, i, j, stato, ff, HLmatrix},
   stato = {};
@@ -93,7 +94,8 @@ InvMixColumns[list_?ListQ] := Module[{a, i, j, stato, ff, HLmatrix},
        Range[3]]);
    AppendTo[stato, a]
    ];
-  stato]
+  stato
+]
 
 (*Funzione usata internamente al keyschedule*)
 g[list_, rc_] := BitXor[SubByte[RotateLeft[list]], rc];
@@ -123,8 +125,7 @@ KeySchedule[key_?StringQ, tweak_?StringQ] :=
 (*esempio di come funziona il keyschedule, check sulla presenza di \
 tutte e 11 le round keys e prova su test vector proposto \
 dall'articolo*)
-rk = KeySchedule["2b7e151628aed2a6abf7158809cf4f3c", 
-   "543bd88000017550"];
+rk = KeySchedule["2b7e151628aed2a6abf7158809cf4f3c", "543bd88000017550"];
 FromByteToHex /@ rk
 Length[rk]
 

@@ -1,5 +1,4 @@
-
-
+Get["FiniteFields.wl"]
 
 (*implementazione del crittosistema Zorro*)
 
@@ -12,129 +11,86 @@ B3390C29CD43FEABF594231680C0124CE9481908AE41708414A2D5B83365BAED17CF96\
 4EAF04AD74C3EEA6F6C77D40D40D3E5BEC78A0B14473475C982122613FC67A56DDE785\
 C98A5727079A03A383E46AA52F794F";
 
-S[x_] := IntegerDigits[FromDigits[x, 16], 256, 256]
-G[x_] := IntegerDigits[FromDigits[sbox, 16], 256, 256][[x + 1]]
+lsbox = IntegerDigits[FromDigits[sbox, 16], 256, 256];
+S[x_] := S[x] = lsbox[[x + 1]];
+SINV[x_] := SINV[x] = Position[lsbox,x][[1]]-1;
+(*G[x_] := IntegerDigits[FromDigits[sbox, 16], 256, 256][[x + 1]]*)
 
 (*S[sbox];*)
 
 text = "FF00000000000000000000000000FF01";
-input = IntegerDigits[FromDigits[text, 16], 256, 16];
+input = Transpose@Partition[IntegerDigits[FromDigits[text, 16], 256, 16],4];
 dom = Range[0, 15];
 dom1 = Range[0, 3];
 
 (*SubBytes/SubBytesInverse*)
 
-SubByte[x_] := Map[
-  (If[# < 4,
-     S[sbox][[x[[# + 1]] + 1]],
-     x[[# + 1]]]) & , dom];
+SubByte[s_] := Module[{state},
+    state=s;
+    state[[1]]=Map[S,state[[1]]];
+    state
+]
 
 (*SubByte[input]*)
 
 (*SubByteInverese*)
-SubByteInverse[x_] := Flatten[Map[
-   (If[# < 5,
-      Position[S[sbox], x[[#]]] - 1,
-      x[[#]]]) &, Range[1, 16]
-   ]]
+SubByteInverse[x_] := Module[{state},
+    state=s;
+    state[[1]]=Map[SINV,state[[1]]];
+    state
+]
+
+Print[Table[SINV[S[x]]==x,{x,0,255}]]
 
 (*Shift Rows/ShiftRowsInverse*)
-ShiftRiga[i_, x_] := 
- Map[(Partition[x, 4][[i + 1]][[Mod[i + #, 4] + 1]]) &, dom1]
-ShiftRows[x_] := Flatten[Map[ShiftRiga[#, x] &, dom1]]
+ShiftRows[x_] := MapThread[RotateLeft, {x, Range[0, 3]}]
 
 (*ShiftRowsInverse*)
-
-ShiftRigaInverse[i_, x_] := 
- Map[(Partition[x, 4][[i + 1]][[Mod[# - i, 4] + 1]]) &, dom1]
-ShiftRowsInverse[x_] := Flatten[Map[ShiftRigaInverse[#, x] &, dom1]]
-
-(* il nostro campo è quello analogo all' AES *)
-
-p = 2;
-f = x^8 + x^4 + x^3 + x + 1;
-exp = Exponent[f, x];
-
-Int2Poly[numero_] := 
- IntegerDigits[numero, p, exp] . Reverse@Table[x^i, {i, 0, exp - 1}]
-Poly2Int[poly_] := FromDigits[Reverse@CoefficientList[poly, x, exp], p]
-
-(* somma interna al campo*)
-FieldPlus[f1_] := f1
-FieldPlus[f1_, f2_] := 
- Poly2Int[PolynomialMod[Int2Poly[f1] + Int2Poly[f2], p]]
-FieldPlus[f1_, sf2__] := FieldPlus[f1, FieldPlus[sf2]]
-
-(* prodotto interno al campo*)
-FieldTimes[f1_, f2_] := 
- Poly2Int[
-  PolynomialRemainder[Int2Poly[f1]*Int2Poly[f2], f, x, Modulus -> p]]
-
+ShiftRowsInverse[x_] := MapThread[RotateRight, {x, Range[0, 3]}];
 
 
 (*MixColumn/MixColumsInverse*)
-matrixcolums = {2, 3, 1, 1, 1, 2, 3, 1, 1, 1, 2, 3, 3, 1, 1, 2};
-inversematrixcolums = {14, 11, 13, 9, 9, 14, 11, 13, 13, 9, 14, 11, 
-   11, 13, 9, 14};
+matrixcolumns = {{2, 3, 1, 1},{ 1, 2, 3, 1}, {1, 1, 2, 3}, {3, 1, 1, 2}};
+inversematrixcolumns = {{14, 11, 13, 9}, {9, 14, 11, 13}, {13, 9, 14, 11}, 
+  { 11, 13, 9, 14}};
 
-Elemento[a_, x_, b_, y_] := 
+(*Elemento[a_, x_, b_, y_] := 
  FieldPlus @@ (Map[
     FieldTimes[Partition[a, 4][[x + 1]][[# + 1]], 
       Transpose[Partition[b, 4]][[y + 1]][[# + 1]]] &, dom1])
 
 Riga[a_, b_, x_] :=
  Map[Elemento[a, x, b, #] &, dom1]
+*)
 
-MixColums[a_] :=
- Flatten[Map[Riga[matrixcolums, a, #] &, dom1]]
-
-
-Partition[MixColums[inversematrixcolums], 4] // MatrixForm;
+MixColumns[state_] := Transpose@Map[Inner[FieldTimes,matrixcolumns,#,FieldPlus]&,Transpose[state]];
+MixColumnsInverse[state_] := Transpose@Map[Inner[FieldTimes,inversematrixcolumns,#,FieldPlus]&,Transpose[state]];
 
 
-
-
-
-
-
-
-(*Mix columsInverse*)
-
-MixColumsInverse[a_] :=
- Flatten[Map[Riga[inversematrixcolums, a, #] &, dom1]]
-
+MixColumns[inversematrixcolumns] // MatrixForm;
 
 (*Add Key*)
-
-
 
 k = "0B00000000000000000E2";
-(*key=IntegerDigits[FromDigits[k,16],256,16]*)
+key=Partition[IntegerDigits[FromDigits[k,16],256,16],4]
 
-key = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+(*key = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};*)
+
 
 
 (*Add Key*)
 
-ADDKey[x_] := Map[FieldPlus[x[[# + 1]], key[[# + 1]]] &, dom]
-
-
-
+ADDKey[state_] := MapThread[FieldPlus, {state, key}, 2]
 
 ADDKey[input];
 
 
 (* round costante/round costante Inverse*)
-AddCostant[text_, i_] :=
- Map[
-  If[# < 4,
-     If[# < 3, FieldPlus[text[[# + 1]], i], 
-      FieldPlus[text[[# + 1]], 8*i]
-     ],
-    text[[# + 1]]
-    
-    ] &, dom
-  ]
+AddCostant[s_, round_] :=Module[{state},
+    state=s;
+    state[[1]]=MapThread[BitXor,{state[[1]],{round,round,round,BitShiftLeft[round,3]}}];
+    state
+]
 
 
 
@@ -143,32 +99,30 @@ AddCostant[text_, i_] :=
 
 (*stato iniziale e finale *)
 
-firststep[x_] := List[ADDKey[x], 0]
-finalstep[x_] := List[ADDKey[x], 24]
+FirstStep[x_] := List[ADDKey[x], 0]
+FinalStep[x_] := List[ADDKey[x], 24]
 
 
 (*Round/Round Inverse*)
-Raund[x_] := 
- List[MixColums[ShiftRows[AddCostant[SubByte[x[[1]]], x[[2]] + 1]]], 
-  x[[2]] + 1]
-RaundInverse[x_] := 
- List[SubByteInverse[
-   AddCostant[ShiftRowsInverse[MixColumsInverse[x[[1]]]], x[[2]]]], 
-  x[[2]] - 1]
+ZorroRound[x_] := { MixColumns[ShiftRows[AddCostant[SubByte[x[[1]]], x[[2]] + 1]]], x[[2]] + 1}
 
-
-
+ZorroRoundInverse[x_] := { SubByteInverse[AddCostant[ShiftRowsInverse[MixColumnsInverse[x[[1]]]], x[[2]]]], x[[2]] - 1}
 
 
 (*implementazione 4 round = 1 step*)
 
-State[x_] := 
- List[ADDKey[Nest[Raund, x, 4][[1]]], Nest[Raund, x, 4][[2]]]
+State[x_] :=  Module[{state,round},
+        {state,round} = Nest[ZorroRound, x, 4];
+        {ADDKey[state], round  }
+]   
+    
+StateInverse[x_] :=  Module[{state,round},
+        {state,round} = Nest[ZorroRoundInverse, x, 4];
+        {ADDKey[state], round  }
+]   
 
-State1[x_] := List[Nest[Raund, x, 4][[1]], Nest[Raund, x, 4][[2]]]
-InverseState[x_] := 
- List[ADDKey[Nest[RaundInverse, x, 4][[1]]], 
-  Nest[RaundInverse, x, 4][[2]]]
+(*State1[x_] := List[Nest[Raund, x, 4][[1]], Nest[Raund, x, 4][[2]]]*)
+
 
 
 
@@ -177,12 +131,12 @@ InverseState[x_] :=
 
 (*Ns=numero degli step*)
 Ns = 6;
-Zorro[x_, i_] := Nest[State, firststep[x], i]
+Zorro[x_, i_] := Nest[State, FirstStep[x], i]
 
-ZorroInverse[x_, i_] := Nest[InverseState, finalstep[x], i]
+ZorroInverse[x_, i_] := Nest[InverseState, FinalStep[x], i]
 
 (*implementazione di Ns steps* di Zorro*)
-Zorro[input, 6];
+Zorro[input, Ns];
 
 
 
