@@ -13,7 +13,7 @@ C98A5727079A03A383E46AA52F794F";
 
 lsbox = IntegerDigits[FromDigits[sbox, 16], 256, 256];
 S[x_] := S[x] = lsbox[[x + 1]];
-SINV[x_] := SINV[x] = Position[lsbox,x][[1]]-1;
+SINV[x_] := SINV[x] = Position[lsbox,x][[1,1]]-1;
 (*G[x_] := IntegerDigits[FromDigits[sbox, 16], 256, 256][[x + 1]]*)
 
 (*S[sbox];*)
@@ -34,7 +34,7 @@ SubByte[s_] := Module[{state},
 (*SubByte[input]*)
 
 (*SubByteInverese*)
-SubByteInverse[x_] := Module[{state},
+SubByteInverse[s_] := Module[{state},
     state=s;
     state[[1]]=Map[SINV,state[[1]]];
     state
@@ -88,25 +88,19 @@ ADDKey[input];
 (* round costante/round costante Inverse*)
 AddCostant[s_, round_] :=Module[{state},
     state=s;
-    state[[1]]=MapThread[BitXor,{state[[1]],{round,round,round,BitShiftLeft[round,3]}}];
+    state[[1]]=MapThread[FieldPlus,{state[[1]],{round,round,round,BitShiftLeft[round,3]}}];
     state
 ]
-
-
-
-
-
 
 (*stato iniziale e finale *)
 
 FirstStep[x_] := List[ADDKey[x], 0]
 FinalStep[x_] := List[ADDKey[x], 24]
 
-
 (*Round/Round Inverse*)
 ZorroRound[x_] := { MixColumns[ShiftRows[AddCostant[SubByte[x[[1]]], x[[2]] + 1]]], x[[2]] + 1}
 
-ZorroRoundInverse[x_] := { SubByteInverse[AddCostant[ShiftRowsInverse[MixColumnsInverse[x[[1]]]], x[[2]]]], x[[2]] - 1}
+ZorroRoundInverse[x_] := { SubByteInverse[AddCostant[ShiftRowsInverse[MixColumnsInverse[x[[1]]]] , x[[2]]]], x[[2]] - 1}
 
 
 (*implementazione 4 round = 1 step*)
@@ -123,20 +117,17 @@ StateInverse[x_] :=  Module[{state,round},
 
 (*State1[x_] := List[Nest[Raund, x, 4][[1]], Nest[Raund, x, 4][[2]]]*)
 
-
-
-
-
-
-
 (*Ns=numero degli step*)
 Ns = 6;
-Zorro[x_, i_] := Nest[State, FirstStep[x], i]
+Zorro[x_, i_] := Nest[State, FirstStep[x], i][[1]]
 
-ZorroInverse[x_, i_] := Nest[InverseState, FinalStep[x], i]
+ZorroInverse[x_, i_] := Nest[StateInverse, FinalStep[x], i]
 
 (*implementazione di Ns steps* di Zorro*)
-Zorro[input, Ns];
+Print["ciphertext : ",ctx=Zorro[input, Ns]];
+
+Print["decryption : ",ptx=ZorroInverse[ctx, Ns][[1]],"  (",input==ptx,")"];
+
 
 
 
