@@ -1,4 +1,4 @@
-Get["FiniteFields.wl"];
+Get["finitefields.wl"];
 
 Print["load AES"];
 
