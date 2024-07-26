@@ -1,10 +1,12 @@
+Get["AES.wl"];
+
+Print["load biclique"];
 
 
+(* PARTIZIONAMENTO DELL'AES *)
 
-
-
+(* Funzioni di cifratura *)
 (* Input e output sono matrici 4x4 *)
-
 (* Ricordiamo che:
 RoundFunction[state_, roundKey_] := AddKey[MixColumns[ShiftRows[SubBytes[state]]], roundKey];
 *)
@@ -34,8 +36,8 @@ f[S_, key_]:= Module[{roundKey, state},
 	Return[state];
 ]
 
+(* Funzioni di decifratura *)
 (* Input e output sono matrici 4x4 *)
-
 (* Ricordiamo che:
 InvRoundFunction[state_, roundKey_]:= InvSubBytes[InvShiftRows[InvMixColumns[InvAddKey[state, roundKey]]]];
 *)
@@ -58,6 +60,8 @@ fInv[V_, key_]:= Module[{roundKey, state},
 ]
 
 
+(* COSTRUZIONE DI UN GRUPPO DI CHIAVI *)
+
 Differentials[]:= Module[{deltaK, nablaK},
 	deltaK = Table[{{0,0,0,0},{0,0,0,0},{i,0,0,0},{i,0,0,0}}, {i,0,15}];
 	nablaK = Table[{{0,j,0,0},{0,0,0,0},{0,j,0,0},{0,0,0,0}}, {j,0,15}];
@@ -77,6 +81,9 @@ PrecomputedKeys[baseKey_] := Module[{deltaK, nablaK, Kij},
 	Return[Kij];
 ]
 
+
+(* COSTRUZIONE DEL BICLIQUE *)
+
 BicliqueConstruction[S0_, C0_] := Module[{deltaK, nablaK, intermediateStates, ciphertexts},
 	{deltaK, nablaK} = Differentials[];
 	intermediateStates = Table[BitXor[S0, nablaK[[j]]], {j,1,16}];
@@ -85,6 +92,7 @@ BicliqueConstruction[S0_, C0_] := Module[{deltaK, nablaK, intermediateStates, ci
 ]
 
 
+(* FASE DI PRE-COMPUTAZIONE *)
 
 PrecomputedStates[plaintexts_, intermediateStates_, baseKey_]:= Module[{Ki0, K0j, preForwardStates, preBackwardStates},
 	{Ki0, K0j} = RelatedKeyDifferentials[baseKey];
@@ -92,6 +100,9 @@ PrecomputedStates[plaintexts_, intermediateStates_, baseKey_]:= Module[{Ki0, K0j
 	preBackwardStates = Table[gInv[intermediateStates[[j]], K0j[[j]]], {j,1,16}];
 	{preForwardStates, preBackwardStates}
 ]
+
+
+(* MATCHING CON LE PRE-COMPUTAZIONI *)
 
 RecomputedStates[preForwardStates_, preBackwardStates_] := Module[{deltaK, nablaK, forwardStates, backwardStates},
 	{deltaK, nablaK} = Differentials[];
@@ -106,6 +117,7 @@ FindMatchingState[forwardStates_, backwardStates_] := Module[{match},
 	If[match === {}, None, match[[1]]]
 ]
 
+(* RECUPERO DELLA CHIAVE *)
 KeyRecovery[forwardStates_, backwardStates_, baseKey_] := Module[{matchingState, indexi, indexj, candidateKey},
 	candidateKey = None;
 	matchingState = FindMatchingState[forwardStates, backwardStates];
@@ -118,6 +130,8 @@ KeyRecovery[forwardStates_, backwardStates_, baseKey_] := Module[{matchingState,
 	Return[candidateKey]
 ]
 
+
+(* BICLIQUE ATTACK *)
 
 BicliqueAttack[baseKey_] := Module[{S0, C0, intermediateStates, ciphertexts, plaintexts, preForwardStates, preBackwardStates, forwardStates, backwardStates, recoveredKey},
 	(* Costruzione del biclique *)
@@ -132,6 +146,6 @@ BicliqueAttack[baseKey_] := Module[{S0, C0, intermediateStates, ciphertexts, pla
 	recoveredKey = KeyRecovery[forwardStates, backwardStates, baseKey];
 	If[recoveredKey === None,
 		Print["Chiave segreta non trovata"],
-		Print["La chiave segreta è: ", recoveredKey]
+		Print["La chiave segreta e': ", recoveredKey]
 	];
 ]

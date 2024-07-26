@@ -1,6 +1,17 @@
+Print["load finitefields"];
+
+
+(* Somma di due elementi del campo finito F_{2^4} *)
+FieldSum[u_]:= u;
+FieldSum[u_, v_]:= BitXor[u,v];
+FieldSum[f1_, sf2__]:= FieldSum[f1, FieldSum[sf2]];
+FieldSum[input1_List, input2_List]:= Map[FieldSum[input1[[#]], input2[[#]]]&, Range[Length[input1]]];
+
+
+(* Prodotto di due elementi del campo finito F_{2^4} *)
 Module[{px, x},
 	px = x^4+x+1; (* p(x)=x^4+x+1 è il polinomio irriducibile che definisce il campo *)
-	
+
 	(* Funzione per trasformare un elemento del campo finito F_{2^4} in un polinomio *)
 	Int2Poly[numero_]:=
 		If[numero>=0,
@@ -8,23 +19,27 @@ Module[{px, x},
 		(* else *)
 		Mod[Times[-1,IntegerDigits[numero, 2, 4]], 2] . Reverse@Table[x^i, {i,0,4-1}]
 	];
-	
+
 	(* Funzione per trasformare un polinomio in un elemento del campo finito F_{2^4} *)
 	Poly2Int[poly_]:= FromDigits[Reverse@CoefficientList[poly, x, 4], 2];
-	
+
 	(* Funzione per il calcolo del prodotto di due elementi del campo finito F_{2^4} *)
 	FieldMult[f1_]:= f1;
 	FieldMult[f1_, f2_]:= Poly2Int[PolynomialRemainder[Int2Poly[f1]*Int2Poly[f2], px, x, Modulus->2]];
 	FieldMult[f1_, sf2__]:= FieldMult[f1, FieldMult[sf2]];
 	FieldMult[input_List, input2_?NumericQ]:= Map[FieldMult[input[[#]], input2]&, Range[Length[input]]];
 	FieldMult[input1_?NumericQ, input_List]:= Map[FieldMult[input[[#]], input1]&, Range[Length[input]]];
-]
+];
 
+
+(* Divisibilità di un elemento del campo finito F_{2^4} per x *)
 AlphaDivisible[u_]:= Mod[u,2]==0;
 AlphaDivide[u_]:= Floor[u/2];
 
+(* Grado di un elemento del campo finito F_{2^4} *)
 Deg[u_]:= Module[{i}, i=0; While[Floor[u/2^i]>0, i++]; i-1];
 
+(* Inverso di un elemento del campo finito F_{2^4} con l'algoritmo di Fong *)
 FongInverse[a_]:= Module[{px, u, v, g1, g2, temp},
 	px = FromDigits["10011", 2]; (* p(x)=x^4+x+1 è il polinomio irriducibile che definisce il campo *)
 	{u, v, g1, g2} = {a, px, 1, 0};
@@ -52,4 +67,4 @@ FongInverse[a_]:= Module[{px, u, v, g1, g2, temp},
 		]; (* fine If esterno *)
 	];(* fine While esterno *)
 	Return[g1]; (* output nel caso u==1 dall'inizio *)
-]
+];
