@@ -145,7 +145,27 @@ BicliqueAttack[baseKey_] := Module[{S0, C0, intermediateStates, ciphertexts, pla
 	(* Recupero della chiave *)
 	recoveredKey = KeyRecovery[forwardStates, backwardStates, baseKey];
 	If[recoveredKey === None,
+		Null,
+		recoveredKey
+	]
+	(*If[recoveredKey === None,
 		Print["Chiave segreta non trovata"],
 		Print["La chiave segreta e': ", recoveredKey]
-	];
+	];*)
 ]
+
+
+(* PARTIZIONAMENTO DELL'INSIEME DI CHIAVI	*)
+
+(* Generazione delle chiavi di base con le due righe centrali fissate *)
+fixedRows = Partition[IntegerDigits[RandomInteger[{0, 2^32 - 1}], 16, 8], 4];
+GenerateBaseKey[fixedRows_, randomInt_] := Module[{row0, row4, baseKey},
+  {row0, row4} = Partition[IntegerDigits[randomInt, 16, 6], 3];
+  row0 = Join[Take[row0, 1], {0}, Take[row0, -2]];
+	row4 = Prepend[row4, 0];
+  baseKey = Join[{row0}, fixedRows, {row4}];
+  Return[baseKey];
+]
+
+(* Applicazione del biclique attack su ogni gruppo di chiavi generato *)
+candidateKeys = Select[ParallelMap[BicliqueAttack[GenerateBaseKey[fixedRows, #] &], Range[0, 2^24 - 1]], # =!= Null &]
