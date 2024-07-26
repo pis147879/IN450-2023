@@ -1,4 +1,9 @@
-<<"biclique.wl"
+Get["biclique.wl"];
+
+Print["load biclique-esempio"];
+
+
+(* Esempio con chiave random *)
 
 baseKey = RandomInteger[{0,15}, {4,4}];
 baseKey[[1, 2]]=0; baseKey[[4, 1]]=0;
@@ -9,7 +14,11 @@ Oracle[ciphertexts_]:= Module[{secretKey, plaintexts},
 	Return[plaintexts];
 ]
 
-Print["chiave random : ",BicliqueAttack[baseKey]];
+Print["Esempio con chiave random: "];
+BicliqueAttack[baseKey];
+
+
+(* Esempio con chiave nel gruppo {K[i,j]} *)
 
 baseKey = RandomInteger[{0,15}, {4,4}];
 baseKey[[1, 2]]=0;
@@ -22,5 +31,5 @@ Oracle[ciphertexts_]:= Module[{secretKey, plaintexts},
 	Return[plaintexts];
 ]
 
-
-Print["chiave nel gruppo K[i,j] : ",BicliqueAttack[baseKey]]
+Print["Esempio con chiave nel gruppo {K[i,j]}: "];
+BicliqueAttack[baseKey];
