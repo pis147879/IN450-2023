@@ -167,4 +167,4 @@ GenerateBaseKey[fixedRows_, randomInt_] := Module[{row0, row4, baseKey},
 ]
 
 (* Applicazione del biclique attack su ogni gruppo di chiavi generato *)
-GeneralBicliqueAttack[fixedRows_] := Select[ParallelMap[BicliqueAttack[GenerateBaseKey[fixedRows, #] &], Range[0, 2^24 - 1]], # =!= Null &];
+GeneralBicliqueAttack[fixedRows_] := Select[ParallelMap[BicliqueAttack[GenerateBaseKey[fixedRows, #] ]&, Range[0, 2^24 - 1]], # =!= Null &];
