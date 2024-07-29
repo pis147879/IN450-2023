@@ -57,4 +57,9 @@ Print["Esempio generale:"];
 Print[BicliqueAttack[GenerateBaseKey[fixedRows, 100]]];
 
 
-candidateKeys = GeneralBicliqueAttack[fixedRows]
+candidateKeys = GeneralBicliqueAttack[fixedRows];
+
+Print["...ending computation.  Candidate Keys :", Length[candidateKeys]];
+Print["saving candidate keys"];
+DumpSave["candidateKeys.mx",candidateKeys];
+
