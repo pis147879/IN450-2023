@@ -48,7 +48,13 @@ Oracle[ciphertexts_]:= Module[{secretKey, plaintexts},
 	Return[plaintexts];
 ]
 
+
 fixedRows = Partition[IntegerDigits[RandomInteger[{0, 2^32 - 1}], 16, 8], 4];
 
 Print["Esempio generale:"];
+
+
+Print[BicliqueAttack[GenerateBaseKey[fixedRows, 100]]];
+
+
 candidateKeys = GeneralBicliqueAttack[fixedRows]
