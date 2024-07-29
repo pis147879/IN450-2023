@@ -1,0 +1,12 @@
+load finitefields
+load AES
+load biclique
+load biclique-esempio
+Esempio con chiave random: 
+Esempio con chiave nel gruppo {K[i,j]}: 
+Esempio generale:
+Null
+
+LinkConnect::linkc: -- Message text not found -- (LinkObject[7w88x_shm, 3, 1])
+
+KernelObject::timekernels: Timeout for subkernels. Received only 127 of 128 connections.
