@@ -22,42 +22,7 @@ x_+x_:>0/;MemberQ[{x0,x1,x2},x]
 MakeListEquations[equation_]:=Map[MakeEquation[equation,#]&,Map[Times@@#&,Subsets[x]]]
 
 
-Update0[state_,LMatrix_,RoundConstants_,KMatrix_,key_]:=Module[{resultState},
-{left,right}=Partition[state,3];
-resultState = PolynomialMod[LMatrix . Flatten[{S0/. Thread[Rule[x,left]],right},1]+RoundConstants+KMatrix . key,2];
-resultState];
-
-Update1[state_,LMatrix_,RoundConstants_,KMatrix_,key_]:=Module[{resultState},
-{left,right}=Partition[state,3];
-resultState = PolynomialMod[LMatrix . Flatten[{S1/. Thread[Rule[x,left]],right},1]+RoundConstants+KMatrix . key,2];
-resultState];
-
-StateUpdate[state_, bitsList_, LMatrix_,RoundConstants_,KMatrix_,key_]:=Module[{resultStates}, 
-resultStates= {};
-maxBitsList=First[Dimensions[bitsList]];
-countBitsList = 1;
-While [countBitsList <=maxBitsList ,
-resultState = state;
-bits = bitsList[[countBitsList]];
-maxBits = Length[bits];
-countBits= 1;
-While [countBits <= maxBits,
-bit = bits[[countBits]];
-If[bit==0,
-resultState = Update0[resultState,LMatrix,RoundConstants,KMatrix,key],
-resultState =Update1[resultState,LMatrix,RoundConstants,KMatrix,key]];
-countBits++;
-];
-countBitsList++;
-resultStates = Append[resultStates,resultState];
-];
-
-resultStates
-]
-
-
-
-Attack[KMatrix2_,LMatrix2_,RoundConstants2_,plaintext2_,r1_,ciphertext2_]:=Module[{},
+LinearApproximation[x_]:=Module[{S0,S1},
 x={x0,x1,x2};
 S=SBox[x]/.{BitXor->Plus,BitAnd->Times};
 A=Array[a,{3,3}];
@@ -76,41 +41,51 @@ MatrixForm[As=A/.solution[[1]]];
 MatrixForm[bs=b/.solution[[1]]];
 S1=As . x+bs;
 S0=Map[PolynomialMod[#,fieldeqs,Modulus->2]&,S+S1*f];
-
-key=Table[ToExpression["k"<>ToString[i]],{i,0,5}];
-plaintext=Table[ToExpression["p"<>ToString[i]],{i,0,5}];
-
-state=plaintext+KMatrix2 . key;
-allcombinationBit =  Table[IntegerDigits[i,2,r1],{i,0,2^r1-1}];
-
-Equations = PolynomialMod[StateUpdate[state, allcombinationBit, LMatrix2,RoundConstants2,KMatrix2,key,S0,S1]/.Thread[Rule[plaintext,plaintext2]],2];
-guessedkeys=Map[Solve[Thread[#==ciphertext2],key,Modulus->2]&,Equations];
-guessdkeys=DeleteCases[guessedkeys,{}];
-
-valori=key/. guessdkeys;
+{S0,S1}
+]
 
 
-For[i=1, i<=First[Dimensions[valori]], i++,
-	espressioni = valori[[i]];
+Update0[state_,S0_]:=Module[{},
+{left,right}=Partition[state,3];
+PolynomialMod[LMatrix2 . Flatten[{S0/. Thread[Rule[x,left]],right},1]+RoundConstants2+KMatrix2 . key,2]
+]
+
+Update1[state_]:=Module[{},
+{left,right}=Partition[state,3];
+PolynomialMod[LMatrix2 . Flatten[{S1/. Thread[Rule[x,left]],right},1]+RoundConstants2+KMatrix2 . key,2]
+]
+
+StateUpdate[approximations_,state_,bit_]:=Module[{},
+{S0,S1}=approximations;
+If[bit==0, 
+
+Update0[state,S0],
+Update0[state,S1]
+]]
+Clear[SymbolicEncryption];
+
+SymbolicEncryption[approximation_,state_,bitList_]:=Fold[StateUpdate[approximation,#1,#2]&,state,bitList]
+
+ExpandKey[key_]:=Module[{vars,n},
+	vars=Variables[key];
+	n=Length[vars];
+	PolynomialMod[key/.Map[Thread[Rule[vars,IntegerDigits[#,2,n]]]&,Range[0,2^n-1]],2]
+]
+approximation=LinearApproximation[x];
+KeyRecovery[plaintext2_,ciphertext2_,bitList_,approximation_]:=Module[{key,plaintext,solutions},
+
+	key=Table[ToExpression["k"<>ToString[i]],{i,0,5}];
+	plaintext=Table[ToExpression["p"<>ToString[i]],{i,0,5}];
+	solutions=Solve[Thread[PolynomialMod[SymbolicEncryption[approximation,plaintext+KMatrix2 . key,bitList]/.Thread[Rule[plaintext,plaintext2]],2]==ciphertext2],key,Modulus->2];
 	
-	variabili=Variables[espressioni];
-	
-	combinazioni=Tuples[{0,1},Length[variabili]];
-	
-	soluzioniValide=Flatten[Map[
-	Mod[espressioni/.Thread[variabili->#],2]&,combinazioni],1];
-	
-	For[j=1,j<=First[Dimensions[soluzioniValide]],j++,
-		KeyTry=soluzioniValide[[j]];
-
-		possibileciphertext=LowMCEncrypt[plaintext2,KeyTry,KMatrix2,LMatrix2,RoundConstants2,r1];
-
-			If[possibileciphertext==ciphertext2,
-				Print["La chiave trovata \[EGrave]: ",KeyTry];
-				Print["ciphertext originale: ",ciphertext2];
-				Print["ciphertext con la chiave trovata: ",possibileciphertext];
-			]
+	If[solutions=={},{},Union@Flatten[Map[ExpandKey,key/.solutions],1]]
 	]
-]
-]
+Nr=4
+keys=Union@Flatten[Map[KeyRecovery[plaintext2,ciphertext2,IntegerDigits[#,2,Nr],approximation]&,Range[0,2^Nr-1]],1]
+(*KeyRecovery[plaintext2,ciphertext2,IntegerDigits[1,2,Nr],approximation]*)
+findkey=Map[{#,LowMCEncrypt[plaintext2,#,KMatrix2,LMatrix2,RoundConstants2,Nr]}&,keys]
+Select[findkey,#[[2]]==ciphertext2&]
 
+
+(* ::Input:: *)
+(*Variables[{{k0,0,1,1+k0,1+k0,0}}]*)
