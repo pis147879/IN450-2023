@@ -1,6 +1,7 @@
 (* ::Package:: *)
 
-Get["C:\\Users\\tizia\\Desktop\\Progetto\\LowMCEncryption.wl"];
+(*Get["C:\\Users\\tizia\\Desktop\\Progetto\\LowMCEncryption.wl"];*)
+Get["LowMCEncryption.wl"];
 
 Print["load LinearizationRround"];
 

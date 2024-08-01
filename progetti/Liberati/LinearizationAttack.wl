@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
-Get["C:\\Users\\tizia\\Desktop\\Progetto\\LinearizationRround.wl"];
-
+(*Get["C:\\Users\\tizia\\Desktop\\Progetto\\LinearizationRround.wl"];*)
+Get["LinearizationRround.wl"];
 Print["load LinearizationAttack"];
 
 
@@ -16,7 +16,9 @@ RoundConstants2={0,1,0,1,0,1};
 ciphertext2=LowMCEncrypt[plaintext2,key2,KMatrix2,LMatrix2,RoundConstants2,r1];
 
 Print["La chiave originale \[EGrave]: ",key2];
-ChiaveTrovata2=Attack[KMatrix2,LMatrix2,RoundConstants2,plaintext2,r1,ciphertext2];
+etime=Timing[ChiaveTrovata2=Attack[KMatrix2,LMatrix2,RoundConstants2,plaintext2,r1,ciphertext2];];
+Print["trova la chiave : ",ChiaveTrovata2," (in ",etime," secs)"];
+
 
 
 

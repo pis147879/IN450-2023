@@ -20,7 +20,10 @@ index=1;
 		state=state+KMatrix . key;
 		index++;
 	];
-	PolynomialMod[state,2]
+	Print[state];
+	result=PolynomialMod[state,2];
+	Print[result];
+	result
 ]
 
 InverseSBox[{x0_,x1_,x2_}]:={

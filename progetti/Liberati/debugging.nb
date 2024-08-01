@@ -1,0 +1,516 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21223,        508]
+NotebookOptionsPosition[     19842,        478]
+NotebookOutlinePosition[     20240,        494]
+CellTagsIndexPosition[     20197,        491]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"SetDirectory", "[", 
+  RowBox[{"NotebookDirectory", "[", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Get", "[", "\"\<LinearizationAttack.wl\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.931403876283049*^9, 3.93140392535846*^9}},
+ CellLabel->
+  "(Debug) In[1]:=",ExpressionUUID->"73bb01e4-d38c-474d-9d56-07aaa9a20368"],
+
+Cell[BoxData["\<\"/Users/marco/marco.live/DIDATTICA/CORSI/2023-2024/IN450/\
+code/IN450-2023/progetti/Liberati\"\>"], "Output",
+ CellChangeTimes->{3.931403925857898*^9, 3.931403983790249*^9, 
+  3.93140415322762*^9, 3.931404239520528*^9, 3.931404304759013*^9},
+ CellLabel->
+  "(Debug) Out[1]=",ExpressionUUID->"d809dfe6-382d-4561-a55e-44ea477ed84c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"load LowMCEncryption\"\>"], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.931404304821885*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"f4d03989-60cd-4792-8710-abb5dc51bcf8"],
+
+Cell[BoxData["\<\"load LinearizationRround\"\>"], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.93140430487753*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"5465e026-2275-47b3-b862-48b012a939c0"],
+
+Cell[BoxData["\<\"load LinearizationAttack\"\>"], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.931404304933446*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"cff9cc27-8cda-4e8c-b048-eadb32e12c42"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "7906874469154", ",", "12771593678721", ",", "12783515445752", ",", 
+   "12771594763254", ",", "7906872737804", ",", "4864724842697"}], 
+  "}"}]], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.9314043049887238`*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"33123cc3-c704-47e4-81b8-d58370ffcaf1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "1"}], 
+  "}"}]], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.931404305044957*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"00788c86-22ce-4827-90e2-5f38223b65b1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"La chiave originale \[EGrave]: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0"}], "}"}]}],
+  SequenceForm["La chiave originale \[EGrave]: ", {1, 1, 1, 1, 0, 0}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.931403925935145*^9, 3.931403983853423*^9, 
+  3.9314041532894897`*^9, 3.931404239585615*^9, 3.931404305100809*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"5eecf12c-13ce-4e27-a49f-136025cdf156"]
+}, Open  ]],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll", "reps", 
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"StateUpdate\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"k5\\\", \
+\\\"\[Rule]\\\", \\\"0\\\"}], \\\",\\\", RowBox[{\\\"k3\\\", \\\"\[Rule]\\\", \
+\\\"1\\\"}], \\\",\\\", RowBox[{\\\"k1\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \
+\\\",\\\", RowBox[{\\\"k4\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \\\",\\\", \
+RowBox[{\\\"k2\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \\\",\\\", RowBox[{\\\"k0\\\
+\", \\\"\[Rule]\\\", \\\"0\\\"}]}], \\\"}\\\"}], \\\"}\\\"}], \\\",\\\", \
+RowBox[{\\\"{\\\", RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"k0\\\", \\\"\[Rule]\
+\\\", \\\"0\\\"}], \\\",\\\", RowBox[{\\\"k1\\\", \\\"\[Rule]\\\", \
+\\\"1\\\"}], \\\",\\\", RowBox[{\\\"k2\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \
+\\\",\\\", RowBox[{\\\"k3\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \\\",\\\", \
+RowBox[{\\\"k4\\\", \\\"\[Rule]\\\", \\\"0\\\"}], \\\",\\\", RowBox[{\\\"k5\\\
+\", \\\"\[Rule]\\\", \\\"1\\\"}]}], \\\"}\\\"}], \\\"}\\\"}]}], \\\"]\\\"}], \
+\\\"}\\\"}]\\) is neither a list of replacement rules nor a valid dispatch \
+table, and so cannot be used for replacing.\"", 2, 2, 1, 31543978098986405877,
+    "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.931403904083394*^9, 3.9314039261598873`*^9}, 
+   3.931403984086262*^9, 3.9314041535273952`*^9, 3.931404239874197*^9, 
+   3.9314043051648912`*^9},
+ CellLabel->
+  "(Debug) During evaluation of \
+In[1]:=",ExpressionUUID->"b22c8f90-6537-4f0e-8d08-f196ad41e3d8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "StateUpdate"}]], "Input",
+ CellChangeTimes->{{3.931404017641651*^9, 3.9314040216235723`*^9}},
+ CellLabel->
+  "(Debug) (Dialog) \
+In[3]:=",ExpressionUUID->"805a35c7-8f0e-4834-9223-27daff66f544"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = True, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\"Global`StateUpdate\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"StateUpdate", "[", 
+                    
+                    RowBox[{
+                    "state_", ",", "bitsList_", ",", "LMatrix_", ",", 
+                    "RoundConstants_", ",", "KMatrix_", ",", "key_"}], "]"}], 
+                    ":=", 
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", "resultStates", "}"}], ",", 
+                    RowBox[{
+                    RowBox[{"resultStates", "=", 
+                    RowBox[{"{", "}"}]}], ";", 
+                    RowBox[{"maxBitsList", "=", 
+                    RowBox[{"First", "[", 
+                    RowBox[{"Dimensions", "[", "bitsList", "]"}], "]"}]}], 
+                    ";", 
+                    RowBox[{"countBitsList", "=", "1"}], ";", 
+                    RowBox[{"While", "[", 
+                    RowBox[{
+                    RowBox[{"countBitsList", "\[LessEqual]", "maxBitsList"}], 
+                    ",", 
+                    RowBox[{
+                    RowBox[{"resultState", "=", "state"}], ";", 
+                    RowBox[{"bits", "=", 
+                    
+                    RowBox[{"bitsList", "\[LeftDoubleBracket]", 
+                    "countBitsList", "\[RightDoubleBracket]"}]}], ";", 
+                    RowBox[{"maxBits", "=", 
+                    RowBox[{"Length", "[", "bits", "]"}]}], ";", 
+                    RowBox[{"countBits", "=", "1"}], ";", 
+                    RowBox[{"While", "[", 
+                    RowBox[{
+                    RowBox[{"countBits", "\[LessEqual]", "maxBits"}], ",", 
+                    RowBox[{
+                    RowBox[{"bit", "=", 
+                    
+                    RowBox[{"bits", "\[LeftDoubleBracket]", "countBits", 
+                    "\[RightDoubleBracket]"}]}], ";", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"bit", "\[Equal]", "0"}], ",", 
+                    RowBox[{"resultState", "=", 
+                    RowBox[{"Update0", "[", 
+                    
+                    RowBox[{"resultState", ",", "LMatrix", ",", 
+                    "RoundConstants", ",", "KMatrix", ",", "key"}], "]"}]}], 
+                    ",", 
+                    RowBox[{"resultState", "=", 
+                    RowBox[{"Update1", "[", 
+                    
+                    RowBox[{"resultState", ",", "LMatrix", ",", 
+                    "RoundConstants", ",", "KMatrix", ",", "key"}], "]"}]}]}],
+                     "]"}], ";", 
+                    RowBox[{"countBits", "++"}], ";"}]}], "]"}], ";", 
+                    RowBox[{"countBitsList", "++"}], ";", 
+                    RowBox[{"resultStates", "=", 
+                    RowBox[{"Append", "[", 
+                    RowBox[{"resultStates", ",", "resultState"}], "]"}]}], 
+                    ";"}]}], "]"}], ";", "resultStates"}]}], "]"}]}]}, {" "}},
+                   GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"Global`StateUpdate\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"],
+               ImageSizeCache->{10., {2., 8.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox[
+             TagBox[
+              TooltipBox[
+               StyleBox["\<\" Symbol\"\>", "InformationRowLabel",
+                StripOnInput->False],
+               "\"Symbol\"",
+               TooltipStyle->"TextStyling"],
+              Annotation[#, "Symbol", "Tooltip"]& ], "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\"Global`StateUpdate\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> "Global`StateUpdate", "Documentation" -> 
+    None, "OwnValues" -> None, "UpValues" -> None, "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, $CellContext`StateUpdate, {$CellContext`StateUpdate[
+         Pattern[$CellContext`state, 
+          Blank[]], 
+         Pattern[$CellContext`bitsList, 
+          Blank[]], 
+         Pattern[$CellContext`LMatrix, 
+          Blank[]], 
+         Pattern[$CellContext`RoundConstants, 
+          Blank[]], 
+         Pattern[$CellContext`KMatrix, 
+          Blank[]], 
+         Pattern[$CellContext`key, 
+          Blank[]]] :> 
+       Module[{$CellContext`resultStates}, $CellContext`resultStates = {}; \
+$CellContext`maxBitsList = First[
+            Dimensions[$CellContext`bitsList]]; $CellContext`countBitsList = 
+          1; While[$CellContext`countBitsList <= $CellContext`maxBitsList, \
+$CellContext`resultState = $CellContext`state; $CellContext`bits = 
+            Part[$CellContext`bitsList, $CellContext`countBitsList]; \
+$CellContext`maxBits = Length[$CellContext`bits]; $CellContext`countBits = 1; 
+           While[$CellContext`countBits <= $CellContext`maxBits, \
+$CellContext`bit = Part[$CellContext`bits, $CellContext`countBits]; 
+             If[$CellContext`bit == 
+               0, $CellContext`resultState = \
+$CellContext`Update0[$CellContext`resultState, $CellContext`LMatrix, \
+$CellContext`RoundConstants, $CellContext`KMatrix, $CellContext`key], \
+$CellContext`resultState = $CellContext`Update1[$CellContext`resultState, \
+$CellContext`LMatrix, $CellContext`RoundConstants, $CellContext`KMatrix, \
+$CellContext`key]]; Increment[$CellContext`countBits]; Null]; 
+           Increment[$CellContext`countBitsList]; $CellContext`resultStates = 
+            Append[$CellContext`resultStates, $CellContext`resultState]; 
+           Null]; $CellContext`resultStates]}], "SubValues" -> None, 
+    "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {}, "FullName" -> 
+    "Global`StateUpdate"|>, False]]], "Output",
+ CellChangeTimes->{3.931404022357107*^9},
+ CellLabel->
+  "(Debug) (Dialog) \
+Out[3]=",ExpressionUUID->"d4fa27fd-5836-4613-b2aa-f4ecc2f3346b"]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 606}, {Automatic, 95}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"fc46cd0e-c738-47a8-a60d-486c7b6ff4a8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 346, 6, 66, "Input",ExpressionUUID->"73bb01e4-d38c-474d-9d56-07aaa9a20368"],
+Cell[929, 30, 347, 5, 48, "Output",ExpressionUUID->"d809dfe6-382d-4561-a55e-44ea477ed84c"],
+Cell[CellGroupData[{
+Cell[1301, 39, 301, 5, 24, "Print",ExpressionUUID->"f4d03989-60cd-4792-8710-abb5dc51bcf8"],
+Cell[1605, 46, 304, 5, 24, "Print",ExpressionUUID->"5465e026-2275-47b3-b862-48b012a939c0"],
+Cell[1912, 53, 305, 5, 24, "Print",ExpressionUUID->"cff9cc27-8cda-4e8c-b048-eadb32e12c42"],
+Cell[2220, 60, 446, 10, 44, "Print",ExpressionUUID->"33123cc3-c704-47e4-81b8-d58370ffcaf1"],
+Cell[2669, 72, 362, 8, 24, "Print",ExpressionUUID->"00788c86-22ce-4827-90e2-5f38223b65b1"],
+Cell[3034, 82, 551, 11, 24, "Print",ExpressionUUID->"5eecf12c-13ce-4e27-a49f-136025cdf156"]
+}, Open  ]],
+Cell[3600, 96, 1536, 25, 48, "Message",ExpressionUUID->"b22c8f90-6537-4f0e-8d08-f196ad41e3d8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5173, 126, 222, 5, 44, "Input",ExpressionUUID->"805a35c7-8f0e-4834-9223-27daff66f544"],
+Cell[5398, 133, 14428, 342, 545, "Output",ExpressionUUID->"d4fa27fd-5836-4613-b2aa-f4ecc2f3346b"]
+}, Open  ]]
+}
+]
+*)
+
