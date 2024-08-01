@@ -1,4 +1,4 @@
-Get["AES.wl"];
+
 
 Print["load biclique"];
 
@@ -36,8 +36,8 @@ f[S_, key_]:= Module[{roundKey, state},
 	Return[state];
 ]
 
-(* Funzioni di decifratura *)
 (* Input e output sono matrici 4x4 *)
+
 (* Ricordiamo che:
 InvRoundFunction[state_, roundKey_]:= InvSubBytes[InvShiftRows[InvMixColumns[InvAddKey[state, roundKey]]]];
 *)
