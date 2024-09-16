@@ -18,5 +18,8 @@ TriviumSetup[key_,IV_]:=Join[key,Table[0,13],IV,{0,0,0,0},Table[0,108],{1,1,1}];
 (*Genera il bit di chiave di output*)
 TriviumOutput[s_]:=PolynomialMod[Apply[Plus,s[[{0,93,177}+1]]],2]
 
-(*Genera il keystream di output partendo da un vettore inizializzato*)
+(*Genera un keystream di output di lunghezza <len> partendo da un vettore inizializzato con <key> e <IV>, facendo <r> round di whitening *)
 TriviumKeystream[key_,IV_,r_,len_]:=Map[TriviumOutput,NestList[TriviumUpdate,Nest[TriviumUpdate,TriviumSetup[key,IV],r],len]]
+
+
+(* aggiungere dei vettori di test *)
